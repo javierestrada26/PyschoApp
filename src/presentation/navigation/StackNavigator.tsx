@@ -29,12 +29,11 @@ const Stack = createStackNavigator<RootStackParams>();
 export const StackNavigator = () => {
   return (
     <Stack.Navigator
-    initialRouteName='SlidesScreen'
+    
     screenOptions={{
       headerShown: false,
     }}
     >
-        
         <Stack.Screen name="HomeScreen" component={HomeScreen} /> 
         <Stack.Screen name="PublicationsByCategoryScreen" component={PublicationsByCategory} />
         <Stack.Screen name="PublicationsDetailsScreen" component={PublicationsDetails} />

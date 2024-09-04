@@ -1,28 +1,17 @@
+import { HYGRAPH_API } from '@env'
 import { request, gql } from 'graphql-request'
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
-
-const MASTER_URL = 'https://api-us-east-1-shared-usea1-02.hygraph.com/v2/cluxybisy0hmt08uxbz2s10tn/master'
 
 
 
+const MASTER_URL = HYGRAPH_API 
 
-const getSlider = async () => {
-    const query = gql`
-    query GetSlider {
-        sliders {
-          id
-          name
-          image {
-            url
-          }
-        }
-      }
-    `
-    
-    const data = await request(MASTER_URL, query)
-    
-    return data
+export const sleep= async()=>{
+  return new Promise((resolve)=>{
+    setTimeout(resolve, 2000)
+  })
+
 }
+
 
 const getCategories =  async () => {
   const query = gql`
@@ -41,57 +30,6 @@ const getCategories =  async () => {
 }
 
 
-const getLastesPublications = async () => {
-  const query = gql`
-  query GetLastestPublic {
-    latestPublication {
-      id
-      name
-      category {
-        name
-      }
-      about
-      images {
-        url
-      }
-    }
-  }
-  `
-  const data = await request(MASTER_URL, query)
-  return data
-}
-
-const getPublicationsByCategory = async (category: string) => {
-  const query = gql`
-  query GetLastestPublic {
-    latestPublication(where: {category: {name: "`+category+`"}}) {
-      id
-      name
-      category {
-        name
-      }
-      about
-      images {
-        url
-      }
-      chapter {
-        ... on Chapter {
-          id
-          name
-          video {
-            url
-          }
-        }
-      }
-      description
-    }
-  }
-  `
-  const data = await request(MASTER_URL, query)
-  return data
-
-}
-
 const getPublicByCategory = async (category: string) => {
   const query =gql `
   query GetNewLastestPublic {
@@ -102,6 +40,7 @@ const getPublicByCategory = async (category: string) => {
       tag
       youtubeUrl
       description
+      content
       chapter {
         ... on Chapter {
           id
@@ -134,7 +73,7 @@ const getNewLastestPublic = async () => {
       tag
       youtubeUrl
       description
-      demoUrl
+      content
       chapter {
         ... on Chapter {
           id
@@ -147,6 +86,9 @@ const getNewLastestPublic = async () => {
       image {
         url
       }
+      category {
+        name
+      }
     }
   }
   `
@@ -155,6 +97,7 @@ const getNewLastestPublic = async () => {
 }
 
 const getPersonal = async () => {
+  await sleep()
   const query = gql`
   query Personal {
     staffs {
@@ -163,7 +106,8 @@ const getPersonal = async () => {
       profession
       city
       description
-      contactUrl
+      whatsUrl
+      mailUrl
       image {
         url
       }
@@ -174,14 +118,23 @@ const getPersonal = async () => {
   return data
 }
 
-
+const getLink = async () => {
+  const query =  gql`
+  query MyQuery {
+  links {
+    name
+    medialink
+  }
+}`
+}
 
 export default{
-    getSlider,
+    
     getCategories,
-    getLastesPublications,
-    getPublicationsByCategory,
+    
+    
     getNewLastestPublic,
     getPublicByCategory,
-    getPersonal
+    getPersonal,
+    getLink
 }

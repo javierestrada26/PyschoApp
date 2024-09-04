@@ -3,23 +3,14 @@ import hyGraphApi from "../../../../config/api/hyGraphApi"
 import { useEffect, useState } from "react"
 import { HomeHeading } from "../../../components/home/HomeHeading"
 import { PersonalList } from "./PersonalList"
+import { useQuery } from "@tanstack/react-query"
 
 
 
 export const Personal = () => {
 
-    useEffect(() => {
-        getPersonal()
-    },[])
-
     const [personal, setPersonal] = useState([])
 
-    const getPersonal = async () => {
-        hyGraphApi.getPersonal().then((resp: unknown) => {
-            setPersonal(resp?.staffs)
-            
-        })
-    }
   return (
     <View>
         <HomeHeading

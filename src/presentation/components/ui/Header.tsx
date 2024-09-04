@@ -1,94 +1,105 @@
 import { Avatar, Input, Layout, Text } from "@ui-kitten/components"
-import { Pressable, StatusBar, StyleSheet, TouchableOpacity } from "react-native"
-import { colors } from '../../../config/theme/theme';
-import { MyIcon } from "./MyIcon";
+import { Image, Pressable, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native"
+
 import { useUser } from "@clerk/clerk-expo";
-import { StackScreenProps } from "@react-navigation/stack";
-import { RootStackParams } from "../../navigation/StackNavigator";
 import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
+import { Icon } from "react-native-paper";
+import LottieView from 'lottie-react-native';
 
 //StatusBar.setBarStyle('light-content');
 
 export const Header = () => {
     const { isLoaded, isSignedIn, user } = useUser();
     const navigation = useNavigation()
+    const [greeting, setGreeting] = useState('');
 
-    //metodo para navegar a la pantalla de emergencia
+  useEffect(() => {
+    const now = new Date();
+    const hours = now.getHours();
+    const minute = now.getMinutes();
+
+    if (hours >= 5 && hours < 12) {
+        setGreeting('Buenos Días');
+      } else if (hours === 12 && minute === 0) {
+        setGreeting('Buenos Días');
+      } else if (hours >= 12 && hours < 18) {
+        setGreeting('Buenas Tardes');
+      } else {
+        setGreeting('Buenas Noches');
+      }
+  }, [])
+  
 
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
         {/**Profile Section */}
-        <Layout style={styles.profileMainContainer}>
-            <Layout style={styles.profileContainer}>
-                <Avatar
-                    source={require('../../../assets/avatar.png')}
+        <View style={styles.profileMainContainer}>
+            <View style={styles.profileContainer}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('ProfileScreen' as never)}
+                >
+                <Image
+                    source={{uri: user?.imageUrl}}
                     style={styles.avatar}
                 />
-                <Layout style={{ backgroundColor: colors.primary }}>
-                    <Text style={{ color: 'white' }} category="h6">Bienvenido</Text>
-                    <Text style={{ color: 'white', marginTop:5 }} category="s2">{user?.firstName ?? ''} {user?.lastName ?? ''}</Text>
-                </Layout>
-            </Layout>
+                </TouchableOpacity>
+                <View >
+                    <Text style={{ color: 'white', marginTop:5 , marginLeft:5}} category="s1">Hola, {user?.firstName ?? ''} </Text>
+                    <Text style={{ color: 'white', marginLeft:5, marginTop:5}} category="h5">{greeting}</Text>
+                </View>
+            </View>
             <TouchableOpacity
-                onPress={() => navigation.navigate('EmergencyScreen')}  
+                onPress={() => navigation.navigate('EmergencyScreen' as never)} 
+                style={{right:15}} 
             >
-                <MyIcon name="help-buoy-sharp" white size={27}/>
+                  <Icon
+                    source={require('../../../assets/emergency.png')}
+                    size={40}
+                  />
             </TouchableOpacity>
-        </Layout>
+        </View>
 
-        {/**Bar Section */}
-        <Layout style={styles.searchBarContainer}>
-            <Input
-                placeholder="Buscar"
-                autoCapitalize="none"
-                style={styles.input} 
-                accessoryLeft={() => <MyIcon name="search" size={20}/>}
-                
-            />
-        </Layout>
-    </Layout>
+
+    </View>
   )
 }
 
 
 const styles = StyleSheet.create({
     container:{
-        padding: 20,
+        padding: 15,
         paddingTop: 50,
-        backgroundColor: colors.primary,
+        backgroundColor:'#005CAA',
+        borderBottomWidth: 1,
+        borderBottomColor: '#005CAA',
+        height: 120,
         borderBottomLeftRadius: 30,
         borderBottomRightRadius: 30,
+        
     },
     profileMainContainer:{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: colors.primary,
+    
+        
     },
     profileContainer:{
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: colors.primary,
         gap: 25,
+       
+        
     },
+
     avatar:{
         width: 45,
         height: 45,
         borderRadius: 99,
         left: 20,
     },
-    searchBarContainer:{
-        marginTop: 20,
-        backgroundColor:colors.primary,
 
-    },
-    input:{
-        padding: 7,
-        paddingHorizontal: 16,
-        backgroundColor: 'white',
-        borderRadius: 20,
-        width: '85%',
-    }
 })

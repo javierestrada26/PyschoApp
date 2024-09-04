@@ -1,5 +1,5 @@
 import { Layout, Text } from "@ui-kitten/components"
-import { StyleSheet } from "react-native"
+import { StyleSheet, View } from "react-native"
 
 //props
 export interface Props {
@@ -9,10 +9,10 @@ export interface Props {
 
 export const HomeHeading = ({text,isViewAll=false}:Props) => {
   return (
-    <Layout style={styles.container}>
+    <View style={styles.container}>
         <Text category="h5" style={styles.heading}>{text}</Text>
         {isViewAll && <Text category="s1" >Ver todo</Text>}
-    </Layout>
+    </View>
   )
 }
 

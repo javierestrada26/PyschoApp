@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
-import { FlatList, Image, TouchableOpacity, View, useWindowDimensions } from 'react-native'
-import { Icon, Text } from 'react-native-paper'
+import { FlatList, Image, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { Icon} from 'react-native-paper'
 import hyGraphApi from '../../../config/api/hyGraphApi';
 import { PublicationsListItem } from './PublicationsListItem';
 
@@ -24,7 +24,7 @@ export const PublicationsByCategory = () => {
     hyGraphApi.getPublicByCategory(param.category)
     .then(resp=>{
       console.log(resp.newLastestPublics);
-      setlastestPublications(resp.newLastestPublics)
+      setlastestPublications(resp?.newLastestPublics)
     })
   }
   {/**const getPublicationsByCategory =  () => {
@@ -35,21 +35,23 @@ export const PublicationsByCategory = () => {
     })
   }*/}
   return (
-    <View style={{padding:20, paddingTop:40,}}>
-      <TouchableOpacity 
-        style={{display:'flex',flexDirection:'row', gap:10,
-        alignItems:'center'}}
-        onPress={() => navigation.goBack()}
-        >
-        <Icon source="arrow-left" color='black'size={28} />
-        <Text variant='titleLarge'>{param.category}</Text>
-      </TouchableOpacity>
+    <View style={{flex:1}} >
+      <View style={{display:'flex',flexDirection:'row', gap:35,
+        alignItems:'center',backgroundColor:'#005CAA', height:120, padding:40, borderBottomLeftRadius:30, borderBottomRightRadius:30 }}>
+        <TouchableOpacity 
+          onPress={() => navigation.goBack()}
+          style={{marginTop:13}}
+          >
+          <Icon source="arrow-left" color='white'size={28}  />
+        </TouchableOpacity>
+        <Text style={{fontWeight:'bold', fontSize:25, color:'white',marginTop:13}}>Listado de {param.category}</Text>
+      </View>
 
       {lastestPublications?.length>0?<FlatList
         data={lastestPublications}
         style={{marginTop:10}}
         renderItem={({item,index})=>(
-          <PublicationsListItem publications={item}/>
+          <PublicationsListItem publication={item}/>
         )}
       />:
       <Text variant='bodyLarge' style={{textAlign:'center',marginTop:'20%', color:'gray'}}>Publicaciones no disponibles</Text>}

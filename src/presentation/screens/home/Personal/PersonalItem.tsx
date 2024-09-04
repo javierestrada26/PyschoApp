@@ -8,25 +8,24 @@ export const PersonalItem = ({staff}:{staff:any}) => {
   console.log(staff);
   return (
     <TouchableOpacity
-      style={{backgroundColor:'#F5F5F5',width:260, marginRight:15, 
-        padding:10, borderRadius:15, gap:3}}
+      style={{backgroundColor:'#F3C11C',width:230,  marginRight:15, 
+         borderRadius:15, gap:3, position:'relative'}}
       onPress={()=>navigation.navigate('PersonalDetailsScreen',{
           staff:staff
       })}
     >
         <Image
           source={{uri:staff?.image.url}}
-          style={{width:240, height:135, borderRadius:10 }}
-          
+          style={{width:140, height:140,  alignSelf:'center'}}
         />
-        <View>
-          <Text variant='titleSmall'>{staff.name}</Text>
+        <View style={{backgroundColor:'white', width:230,height:80,borderRadius:15}}>
+          <Text variant='titleMedium' style={{marginTop:5, padding:5, fontWeight:'bold', left:10}}>{staff.name}</Text>
+          <View style={{display:'flex', flexDirection:'row', gap:50, alignItems:'center'}}>
+        <Text style={{color:'gray', padding:5, fontWeight:'bold', left:10}} variant='labelLarge'>{staff.profession}</Text>
+          <Icon  source="arrow-right-thin" color="#959CA9" size={25} />
+        </View>
         </View>
 
-        <View style={{display:'flex', flexDirection:'row', gap:110, alignItems:'center'}}>
-        <Text style={{color:'gray', marginTop:5}} variant='labelMedium'>{staff.profession}</Text>
-          <Icon  source="arrow-right-thin" color="black" size={25} />
-        </View>
     </TouchableOpacity>
   )
 }

@@ -6,21 +6,22 @@ export interface ThemeColors {
     background: string;
     cardBackground: string;
     buttonTextColor: string;
+    secundary: string;
   }
   
   export const colors: ThemeColors = {
     primary: "#003F72",
+    secundary:'#EFB110',
     text: "black",
-  
-    background: "#F3F2F7",
-    cardBackground: "white",
+    background: "#FFFFFF",
+    cardBackground: "#E4E5EA",
     buttonTextColor: "white",
   };
 
   export const lightColors: ThemeColors = {
     primary: "#5856D6",
     text: "black",
-  
+    secundary:'#EFB110',
     background: "#F3F2F7",
     cardBackground: "white",
     buttonTextColor: "white",
@@ -30,7 +31,7 @@ export interface ThemeColors {
   export const darkColors: ThemeColors = {
     primary: "#5856D6",
     text: "white",
-  
+    secundary:'#EFB110',
     background: "#090909",
     cardBackground: "#2d2d2d",
     buttonTextColor: "white",

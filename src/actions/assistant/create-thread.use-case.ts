@@ -1,27 +1,20 @@
+import { useState } from "react";
+import { assistantApi } from "../../config/api/assistantApi";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-
-const baseURL = 'http:// 192.168.100.220:3000/hannah-assistant';
-
-export const createThreadUseCase = async () => {
-    try {
-        const resp = await fetch(`${baseURL}/create-thread`,{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({})
-        } )
-        if (!resp.ok) {
-            throw new Error(`HTTP error! status: ${resp.status}`);
-        }
-
-        const { id } = await resp.json();
-        console.log('Thread created:', id);
-        return id;
-        
+export const getThreadId = async () =>{
+    const [threadId, setThreadId] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    try { 
+      const resp = await assistantApi.post('/hannah-assistant/create-thread')
+      const { id } = resp.data;
+      setThreadId(id);
+      //console.log('respuesta del id:', resp.data.id);
+      await AsyncStorage.setItem('threadId', id);
+      //console.log('Thread ID saved to AsyncStorage');
     } catch (error) {
-        console.error(`Error creating thread: ${error}`);
-        throw new Error(`Error creating thread: ${error}`);
+        setError('Error creating thread');
+        //console.error('Error creating thread:', error);
     }
-}
+  }

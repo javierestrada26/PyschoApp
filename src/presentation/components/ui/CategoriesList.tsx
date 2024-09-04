@@ -2,6 +2,8 @@ import { useNavigation } from "@react-navigation/native"
 import { StackNavigationProp } from "@react-navigation/stack";
 import { FlatList, Image, Pressable, StyleSheet, View } from "react-native"
 import { Text } from "react-native-paper"
+import { useQuery } from "@tanstack/react-query"
+import { getCategory } from "../../../actions/category/getCategory";
 
 type RootStackParamList = {
   PublicationsByCategoryScreen: { category: string };
@@ -12,6 +14,12 @@ type NavigationProp = StackNavigationProp<RootStackParamList, 'PublicationsByCat
 export const CategoriesList = ({categories}: {categories: any}) => {
   
     const navigation = useNavigation<NavigationProp>()
+
+    const {isLoading,data=[]} = useQuery({
+      queryKey: ['category'],
+      queryFn: () => getCategory(),
+      staleTime: 1000 * 60 * 60
+  })
     return (
         <View>
         <FlatList
@@ -28,8 +36,9 @@ export const CategoriesList = ({categories}: {categories: any}) => {
                         source={{uri:item?.icon?.url}}
                         style={styles.categories}
                     />
-                    <Text variant='bodyMedium' style={{textAlign:'center'}} >{item.name}</Text>
                 </View>
+
+                <Text variant='bodyMedium' style={{textAlign:'center', color:'black', fontWeight:'bold', right:8,marginTop:5}} >{item.name}</Text>
                 
               </Pressable>
               
@@ -44,20 +53,25 @@ const styles= StyleSheet.create({
     container:{
       flex:1,
       alignItems: 'center',
+      marginTop:5
     },
     iconContainer:{
-      backgroundColor: '#F5F5F5',
-      marginRight:10,
-      padding: 15,
+      backgroundColor: '#005CAA',
+      marginRight:35,
+      padding: 5,
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 15,
-      width: 90,
-  
+      borderRadius: 20,
+      width: 80,
+      height: 70,
+      marginLeft: 20,
+      
+      
     },
     categories:{
-      width: 50,
-      height: 50,
-      objectFit: 'contain'
+      width: 45,
+      height: 45,
+
+
     }
   })

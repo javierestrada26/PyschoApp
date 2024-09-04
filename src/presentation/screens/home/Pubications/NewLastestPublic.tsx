@@ -8,6 +8,8 @@ import { HomeHeading } from '../../../components/home/HomeHeading'
 
 export const NewLastestPublic = () => {
     const [lastestPublic, setLastestPublic] = useState([])
+    
+
     useEffect(() => {
         getNewLastestPublic()
     },[])
@@ -17,7 +19,7 @@ export const NewLastestPublic = () => {
         })
     }
   return (
-    <View style={{marginTop:20}}>
+    <View style={{marginTop:10}}>
       <HomeHeading
         text="Últimas Publicaciones"
       />

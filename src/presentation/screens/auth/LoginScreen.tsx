@@ -1,12 +1,13 @@
-import { Button, Layout, Text,} from "@ui-kitten/components"
-import { Image, ScrollView, useWindowDimensions } from "react-native"
-import { MyIcon } from "../../components/ui/MyIcon"
+import { Button} from "@ui-kitten/components"
+import { Image, ScrollView, StyleSheet, Text, View, useWindowDimensions } from "react-native"
 import * as WebBrowser from "expo-web-browser";
 import { useWarmUpBrowser } from "../../../hooks/useWarmUpBrowser"
 import { useCallback } from "react"
 import { useOAuth } from "@clerk/clerk-expo"
+import LottieView from 'lottie-react-native';
+import { Icon } from "react-native-paper";
 
-//interface Props extends StackScreenProps<RootStackParams,'LoginScreen'>{}
+
 WebBrowser.maybeCompleteAuthSession();
 
 export const LoginScreen = () => {
@@ -15,26 +16,20 @@ export const LoginScreen = () => {
 
   useWarmUpBrowser();
 
-  /*const onLogin = () => {
-    //navegar a Homescreen
-    const {navigate} = navigation
-    navigate('HomeScreen')
-
-  }*/
 
   //inicio de sesion con google
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
-  
-  
+
+    
   const  onPress =  useCallback(async () => {
     try {
-      const { createdSessionId, signIn, signUp, setActive } =
+      const { createdSessionId, setActive } =
        ( await startOAuthFlow()) ?? {};
  
       if (createdSessionId && setActive) {
         setActive({ session: createdSessionId });
       } else {
-        // Use signIn or signUp for next steps such as MFA
+        
       }
     } catch (err) {
       console.error("OAuth error", err);
@@ -43,80 +38,73 @@ export const LoginScreen = () => {
 
 
   return (
-    <Layout style={{flex:1}}>
+    <View style={{flex:1}}>
       <ScrollView
-        style={{marginHorizontal:40}}
         showsVerticalScrollIndicator={false}
+        
       >
-        <Layout>
-          <Image
-            source={require('../../../assets/loginapp.png')}
+      <View style={{backgroundColor:'#fff', height:height * 0.27, borderBottomLeftRadius:30, borderBottomRightRadius:30}}>
+        <Image
+          source={require('../../../assets/cerebro2.png')}
+          style={{width: 100, height: 100, alignSelf: 'center', marginTop: height * 0.04, tintColor:'black'}}
+        />
+          <Text style={{fontSize:27, textAlign:'center', color:'black', fontWeight:'bold'}}>
+            PsychoApp
+          </Text>
+      </View>
+        <View>
+          <LottieView
+            source={require('../../../assets/onboarding/animation/Lottie1.json')}
+            autoPlay
+            loop
             style={{
-              width: 200,
-              height: 200,
+              width: 320,
+              height: 320,
               alignSelf: "center",
-              marginTop: height * 0.20,
+              
             }}
           />
-        </Layout>
-        
-        <Layout style={{paddingTop:height * 0.10}}>
-          <Text category="h2">Iniciar Sesión</Text>
-        </Layout>
-        
-      
-        <Layout style={{marginTop:30}}>
 
-
+        </View>
+             
+        <View style={styles.subContainer}>
+          <Text style={{fontSize:27, textAlign:'center', color:'white', marginTop:15}}>
+            Un refugio para tu paz mental
+          </Text>
+          
+          <Text style={{ fontSize:17, textAlign:'center', marginTop:20, color:'white'}}> Acceso a Recursos y Asistencia Virtual </Text>
           <Button
-           accessoryLeft={<MyIcon name="logo-google" white/>}
-           style={{
-              backgroundColor: '#DB4437',
-              borderColor: '#DB4437',
-              borderRadius: 15,
-            
-           }}
-           onPress={onPress}
+            accessoryLeft={
+              <Icon
+              source={require('../../../assets/google.png')}
+              size={20}
+            />}
+            appearance="ghost"
+            style={{
+                backgroundColor: '#fff',
+                borderRadius: 15,
+                marginTop:30
+            }}
+            onPress={onPress}
+            size="large"
           >
             Iniciar con Google
           </Button>
 
-          <Layout style={{height:15}}/>
-
-          <Button
-           accessoryLeft={<MyIcon name="mail" white/>}
-           style={{
-
-              borderRadius: 15,
-            
-           }}
-           //onPress={onPress}
-          >
-            Iniciar con Correo
-          </Button>
-
-          <Layout style={{height:50}}>
-          <Layout style={{
-          flexDirection:"row",
-          justifyContent:"center",
-          alignItems:"flex-end",
-          height:50
-        }}>
-          <Text >¿No tienes cuenta?</Text>
-          <Text
-          status="primary"
-          category="s1"
-          onPress={() => console.log('Register')}
-          >
-             Registrate
-          </Text>
-        </Layout>
-            
-          </Layout>
-
-        </Layout>
-
-      </ScrollView>
-    </Layout>
+        </View>
+        </ScrollView>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  subContainer:{
+    width: '100%',
+    height: '70%',
+    marginTop: 20,
+    borderTopLeftRadius:30,
+    borderTopRightRadius:30,
+    backgroundColor:'#005CAA',
+    padding: 20,
+  }
+})

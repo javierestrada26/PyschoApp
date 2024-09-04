@@ -12,17 +12,21 @@ export const PersonalDetails = () => {
     const [staff, setStaff] = useState([])
 
     useEffect(() => {
-        
         setStaff(params.staff);
     }, [params])
   return (
-    <View style={{padding:20,marginTop:40}}>
-        <View style={{display:'flex', flexDirection:'row',alignItems:'center',gap:60}}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Icon source='arrow-left' color='black' size={28}/>
+    <View >
+        
+        <View style={{display:'flex', flexDirection:'row',alignItems:'center',gap:35, backgroundColor:'#005CAA', height:120, padding:40, borderBottomLeftRadius:30, borderBottomRightRadius:30}}>
+            <TouchableOpacity
+             onPress={() => navigation.goBack()}
+             style={{marginTop:13}}
+            >
+                <Icon source='arrow-left' color='white' size={30}/>
             </TouchableOpacity>
-            <Text variant='titleLarge'>Detalles de Personal</Text>
+            <Text variant='titleLarge' style={{fontWeight:'bold', color:'white', marginTop:13}}>Detalles de Personal</Text>
         </View>
+        
 
         {/**Seccion de detalles */}
         <PersonalContent staff={staff}/>

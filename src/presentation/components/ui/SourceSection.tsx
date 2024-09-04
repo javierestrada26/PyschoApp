@@ -8,27 +8,33 @@ export const SourceSection = ({publication}: {publication: any}) => {
             return <Icon source="youtube" color="red" size={50} />;
         } else if (publication.tag === 'Podcast') {
             return <Icon source="spotify" color="green" size={50} />;
-        } else {
-            return null; // O algún icono por defecto si lo prefieres
+        } else if (publication.tag === 'Articulo'){
+            return <Icon source="file-document" color="blue" size={50} />;
         }
     };
 
     const watchVideo = () => {
         Linking.openURL(publication.youtubeUrl)
     }
+    const hasYoutubeUrl = publication && publication.youtubeUrl;
+
   return  publication&& (
-    <View style={{marginTop:20, }}>
-        <Text variant='titleLarge'>Enlaces</Text>
-        <TouchableOpacity style ={{marginTop:20, backgroundColor:'white',
-         alignItems:'center', borderRadius:10, width:100}}
-         onPress={watchVideo}
-         >
-            <Text>{getCategoryIcon()}</Text>
-            {publication.tag==='Video'?<Text variant='labelMedium'>Youtube</Text>:
-            <Text variant='labelMedium'>Spotify</Text>
-            }
-            
-        </TouchableOpacity>
+    <View style={{ padding:10}}>
+        {hasYoutubeUrl&&(
+        <>
+            <Text variant='titleLarge'style={{fontWeight:'bold',padding:10}}>Enlaces</Text>
+            <TouchableOpacity style ={{backgroundColor:'white',
+            alignItems:'center', borderRadius:10, width:200, alignSelf:'center'}}
+            onPress={watchVideo}
+            >
+                <Text>{getCategoryIcon()}</Text>
+
+                {publication.tag==='Articulo'?<Text variant='labelMedium'>Articulo</Text>:
+                publication.tag==='Podcast'?<Text variant='labelMedium'>Spotify</Text>:
+                <Text variant='labelMedium'>Youtube</Text>}
+            </TouchableOpacity>
+        </>
+        )}
     </View>
   )
 }

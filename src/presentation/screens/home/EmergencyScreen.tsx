@@ -1,71 +1,119 @@
 import { Button, Layout, Text } from "@ui-kitten/components"
-import { StyleSheet, useWindowDimensions } from "react-native"
+import { Linking, StyleSheet, TouchableOpacity, View, useWindowDimensions } from "react-native"
 import { colors } from "../../../config/theme/theme"
 import { MyIcon } from "../../components/ui/MyIcon"
+import { Icon } from "react-native-paper"
+import LottieView from 'lottie-react-native';
+import { useEffect, useState } from "react"
+import hyGraphApi from "../../../config/api/hyGraphApi"
 
 export const EmergencyScreen = () => {
   const {height} = useWindowDimensions()
+  const [link, setLink] = useState<string>('')
+
+  useEffect(()=>{
+    getLink()
+  },[])
+
+  const getLink = async () => {
+    return hyGraphApi.getLink().then((resp)=>{
+      const linkResponse = resp; // Tipo de retorno explícito para resp
+      console.log("LINK", linkResponse);
+      setLink(linkResponse);
+    })
+  }
+
+  const zoomLink = () => {
+    Linking.openURL('https://utpl.zoom.us/j/9587780756?pwd=NDdLQnRnTWkxd3QxODZkdS9iaE5iUT09')
+  }
   return (
-    <Layout style={styles.container}>
-      <Layout style={{
+    <View style={styles.container}>
+      <View style={{
           paddingTop:height * 0.10, 
           marginHorizontal:40,
-          backgroundColor:colors.primary,
+          
           }}
           >
-        <Text style={{color:'white'}}category="h1">Necesitas Ayuda?</Text>
-      </Layout>
-      {/**Parrafos de informacion  */}
-      <Layout style={{marginTop:50,marginHorizontal:40, backgroundColor:colors.primary}}>
-        <Text style={{color:'white',textAlign:'center'}}category="h6">
-          Si te encuentras en una situacion de emergencia, no dudes en llamar a los numeros de emergencia
-          de tu localidad.
-        </Text>
-      </Layout>
+        {/**Titulo de la pantalla en el centro */}
+        <Text style={{color:'black', textAlign:'center'}}category="h1">Necesitas Ayuda</Text>
         
-      <Layout style={{
-          marginTop:50,
+      </View>
+
+      <View>
+          <LottieView
+            source={require('../../../assets/onboarding/animation/Lottie3.json')}
+            autoPlay
+            loop
+            style={{
+              width: 300,
+              height: 300,
+              alignSelf: "center",
+              
+            }}
+          />
+
+        </View>
+
+      {/**Parrafos de informacion  */}
+      <View style={{marginHorizontal:40, }}>
+        <Text style={{fontSize:20, textAlign:'center', color:'#959CA9'}}category="s1">
+          Si requieres ayuda inmediata, no dudes en contactarnos
+        </Text>
+      </View>
+      <View style={{
+          marginTop:15,
           marginHorizontal:40,
-          backgroundColor:colors.primary,
           }}
           >
-        <Text style={{color:'white', textAlign:'center'}}category="h4">Recuerda, no estás solo</Text>
-      </Layout>
+        
+      </View>
 
       {/**Frase, ainear al centro */}
-      <Layout style={{
-          marginTop:50,
+      <View style={{
+          marginTop:15,
           marginHorizontal:40,
-          backgroundColor:colors.primary,
+          alignItems:'center',
           }}
           >
-        <Text style={{color:'#FFD233'}}category="h2">
-          Líneas de ayuda
-        </Text>
-        </Layout>
+          <Text style={{color:'black'}}category="h2">
+            Línea de ayuda
+          </Text>
+      </View>
 
-        {/**Boton de emergencia con imagen*/}
-        <Layout style={{backgroundColor:colors.primary,padding:50}}>
-        <Button
-           accessoryLeft={<MyIcon name="call" white/>}
-           style={{
-              backgroundColor: '#DB4437',
-              borderColor: '#DB4437',
-              borderRadius: 15,
-              justifyContent:'flex-start',
-           }}
+        {/**Boton de emergencia con imagen y que diga Linea 1 */}
+        
+
+        <View >
+          <Button
+            accessoryLeft={
+              <Icon
+              source={require('../../../assets/emergency.png')}
+              size={30}
+            />}
+            appearance="outline"
+            style={{
+                backgroundColor: '#fff',
+                borderRadius: 15,
+                marginTop:40,
+                width:300,
+                alignSelf:'center',
+                
+                
+            }}
+            onPress={zoomLink}
+            size="medium"
           >
-            Línea 1 
+            Línea de Ayuda 
           </Button>
-        </Layout>
+        </View>
 
-    </Layout>
+    </View>
   )
 }
 
 const styles =  StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:colors.primary
+        backgroundColor:'#fff',
     }
 })

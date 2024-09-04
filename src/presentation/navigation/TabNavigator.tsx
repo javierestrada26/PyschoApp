@@ -5,6 +5,7 @@ import { ProfileScreen } from '../screens/profile/ProfileScreen';
 import { MyIcon } from '../components/ui/MyIcon';
 import { Text } from '@ui-kitten/components';
 import { StackNavigator } from './StackNavigator';
+import { Tests } from '../layouts/forms/Tests';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,12 +34,26 @@ export const TabNavigator = () => {
                 <MyIcon name='chatbox' />
             ),
             tabBarLabel:({color})=>(
-                <Text style={{color:color,fontSize:13, marginTop:-7}}>Chat</Text>
+                <Text style={{color:color,fontSize:13, marginTop:-7}}>Asistente</Text>
             ),
         
         }}
         
          />
+
+         
+        <Tab.Screen name="Test" component={Tests}
+            options={{
+                 tabBarIcon: () => (
+                    <MyIcon name='newspaper'/>
+                ),
+                tabBarLabel:({color})=>(
+                        <Text style={{color:color,fontSize:13, marginTop:-7}}>Test</Text>
+                ),
+                
+        }}
+        />
+        
         <Tab.Screen name="ProfileScreen" component={ProfileScreen}
         options={{
             tabBarIcon: () => (
@@ -50,6 +65,7 @@ export const TabNavigator = () => {
         
         }}
          />
+
   </Tab.Navigator>
   )
 }
