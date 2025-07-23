@@ -9,7 +9,7 @@ interface Props{
     size?: number;
 }
 
-export const MyIcon = ({name,color,white=false,size=22}:Props) => {
+export const MyIcon = ({name, color,white=false,size=22}:Props) => {
     const theme = useTheme();
     if(white){
         color = theme['color-info-300'] 
@@ -18,5 +18,5 @@ export const MyIcon = ({name,color,white=false,size=22}:Props) => {
     }else{
         color= theme[color] ?? theme['text-basic-color']
     }
-  return <Ionicons  name={name} color={color} size={size}/>
+  return <Ionicons name={name}color={color} size={size}/>
 }

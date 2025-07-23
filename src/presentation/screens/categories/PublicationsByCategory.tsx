@@ -54,7 +54,7 @@ export const PublicationsByCategory = () => {
           <PublicationsListItem publication={item}/>
         )}
       />:
-      <Text variant='bodyLarge' style={{textAlign:'center',marginTop:'20%', color:'gray'}}>Publicaciones no disponibles</Text>}
+      <Text style={{textAlign:'center',marginTop:'20%', color:'gray'}}>Publicaciones no disponibles</Text>}
     </View>
   )
 }

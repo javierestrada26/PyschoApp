@@ -12,7 +12,7 @@ export const PublicationsDetails = () => {
     const navigation = useNavigation()
 
     useEffect(() => {
-        console.log(params.publication);
+        
         setPublications(params.publication);
     }, [params])
   return (

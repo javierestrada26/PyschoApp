@@ -1,5 +1,5 @@
 import { Avatar, Input, Layout, Text } from "@ui-kitten/components"
-import { Image, Pressable, StatusBar, StyleSheet, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native"
 
 import { useUser } from "@clerk/clerk-expo";
 import { useNavigation } from "@react-navigation/native";

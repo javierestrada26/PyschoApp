@@ -1,7 +1,5 @@
 import { Button, Layout, Text } from "@ui-kitten/components"
 import { Linking, StyleSheet, TouchableOpacity, View, useWindowDimensions } from "react-native"
-import { colors } from "../../../config/theme/theme"
-import { MyIcon } from "../../components/ui/MyIcon"
 import { Icon } from "react-native-paper"
 import LottieView from 'lottie-react-native';
 import { useEffect, useState } from "react"

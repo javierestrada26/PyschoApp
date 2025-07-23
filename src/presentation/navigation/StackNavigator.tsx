@@ -1,9 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { HomeScreen } from '../screens/home/HomeScreen';
-import { LoginScreen } from '../screens/auth/LoginScreen';
-import { RegisterScreen } from '../screens/auth/RegisterScreen';
-import { ChatScreen } from '../screens/chat/ChatScreen';
-import { SlidesScreen } from '../screens/slide/SlidesScreen';
 import { PublicationsByCategory } from '../screens/categories/PublicationsByCategory';
 import { EmergencyScreen } from '../screens/home/EmergencyScreen';
 import { Header } from '../components/ui/Header';
@@ -16,7 +12,7 @@ export type RootStackParams = {
   PublicationsByCategoryScreen: undefined;
   EmergencyScreen: undefined;
   Header: undefined;
-  HomeScreen: undefined;
+  Home: undefined;
   SlidesScreen: undefined;
   PublicationsDetailsScreen: undefined;
   PersonalDetailsScreen: undefined;
@@ -34,7 +30,7 @@ export const StackNavigator = () => {
       headerShown: false,
     }}
     >
-        <Stack.Screen name="HomeScreen" component={HomeScreen} /> 
+        <Stack.Screen name="Home" component={HomeScreen} /> 
         <Stack.Screen name="PublicationsByCategoryScreen" component={PublicationsByCategory} />
         <Stack.Screen name="PublicationsDetailsScreen" component={PublicationsDetails} />
         <Stack.Screen name="PersonalDetailsScreen" component={PersonalDetails} />
